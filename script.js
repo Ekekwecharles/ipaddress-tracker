@@ -74,7 +74,6 @@ function loadLocationDetail(ip_addr = "") {
         alert("Wrong IP: Please input a valid IP address");
         return;
       }
-      console.log(data);
       ip.textContent = data.ip;
       state.textContent = data.location.region;
       country.textContent = data.location.country;
@@ -148,22 +147,22 @@ input.addEventListener("keypress", function (e) {
 
 //Fixing the details section styling on mobile phones
 
-window.addEventListener("load", () => {
-  if (window.innerWidth <= 600) {
-    const details = document.querySelector(".details");
-    const detailsHeight = details.offsetHeight;
-    const detailsWidth = details.offsetWidth;
-    details.style.top = `calc(30vh - ${detailsHeight / 2}px)`;
-    details.style.left = `${window.innerWidth / 2 - detailsWidth / 2}px`;
-  }
-});
+// window.addEventListener("load", () => {
+//   if (window.innerWidth <= 600) {
+//     const details = document.querySelector(".details");
+//     const detailsHeight = details.offsetHeight;
+//     const detailsWidth = details.offsetWidth;
+//     details.style.top = `calc(30vh - ${detailsHeight / 2}px)`;
+//     details.style.left = `${window.innerWidth / 2 - detailsWidth / 2}px`;
+//   }
+// });
 
-window.addEventListener("resize", () => {
-  if (window.innerWidth <= 600) {
-    const details = document.querySelector(".details");
-    const detailsHeight = details.offsetHeight;
-    const detailsWidth = details.offsetWidth;
-    details.style.top = `calc(30vh - ${detailsHeight / 2}px)`;
-    details.style.left = `${window.innerWidth / 2 - detailsWidth / 2}px`;
-  }
-});
+// window.addEventListener("resize", () => {
+//   if (window.innerWidth <= 600) {
+//     const details = document.querySelector(".details");
+//     const detailsHeight = details.offsetHeight;
+//     const detailsWidth = details.offsetWidth;
+//     details.style.top = `calc(30vh - ${detailsHeight / 2}px)`;
+//     details.style.left = `${window.innerWidth / 2 - detailsWidth / 2}px`;
+//   }
+// });
