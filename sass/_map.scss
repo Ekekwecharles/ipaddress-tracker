@@ -1,0 +1,10 @@
+.map-container {
+  height: 65vh;
+  background-color: lightblue;
+  position: relative;
+  z-index: 0;
+
+  @media screen and (max-width: 37.5em) {
+    height: 70vh;
+  }
+}
