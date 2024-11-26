@@ -15,54 +15,68 @@ const btn = document.querySelector(".icon-container");
 const input = document.querySelector(".input");
 
 let map;
+let pos;
 
 document.addEventListener("DOMContentLoaded", function () {
   loadLocationDetail();
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const { latitude, longitude } = position.coords;
+      pos = { lat: latitude, lng: longitude };
+
+      WhereAmI(latitude, longitude);
+      reverseGeocode(latitude, longitude);
+    },
+    (err) => {
+      alert("Allow to access your location");
+    }
+  );
 });
 
-// function WhereAmI(lat, lng) {
-//   fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
-//     .then((response) => {
-//       return response.json();
-//     })
-//     .then((data) => {
-//       console.log("Whereami", data);
-//       if (data.city && data.prov) {
-//         state.textContent = toTitleCase(data.city);
-//         country.textContent = data.prov;
-//       } else {
-//         alert(
-//           "Problem getting location data, Reload the page or try again later"
-//         );
-//         return;
-//       }
-//     })
-//     .catch((err) => {
-//       alert(`Error: ${err}`);
-//       console.error("💥Error:", err);
-//     });
-// }
+function WhereAmI(lat, lng) {
+  fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Whereami", data);
+      if (data.city && data.prov) {
+        // state.textContent = toTitleCase(data.city);
+        // country.textContent = data.prov;
+      } else {
+        alert(
+          "Problem getting location data, Reload the page or try again later"
+        );
+        return;
+      }
+    })
+    .catch((err) => {
+      alert(`Error: ${err}`);
+      console.error("💥Error:", err);
+    });
+}
 
-// function reverseGeocode(lat, lng) {
-//   const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=${OPENCAGE_API_KEY}`;
+function reverseGeocode(lat, lng) {
+  const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=${OPENCAGE_API_KEY}`;
 
-//   fetch(url)
-//     .then((response) => response.json())
-//     .then((data) => {
-//       if (data.results && data.results.length > 0) {
-//         console.log("Opencage", data);
-//         const result = data.results[0];
-//         state.textContent = result.components.state;
-//         country.textContent = result.components.country_code.toUpperCase();
-//         // timezone.textContent = result.annotations.timezone.offset_string;
-//       } else {
-//         console.log("No results found.");
-//       }
-//     })
-//     .catch((error) => {
-//       console.error("Error:", error);
-//     });
-// }
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.results && data.results.length > 0) {
+        console.log("Opencage", data);
+        const result = data.results[0];
+        // state.textContent = result.components.state;
+        // country.textContent = result.components.country_code.toUpperCase();
+        // timezone.textContent = result.annotations.timezone.offset_string;
+      } else {
+        console.log("No results found.");
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
 
 function loadLocationDetail(ip_addr = "") {
   fetch(
@@ -70,6 +84,7 @@ function loadLocationDetail(ip_addr = "") {
   )
     .then((response) => response.json())
     .then((data) => {
+      console.log(data);
       if (data.code === 422) {
         alert("Wrong IP: Please input a valid IP address");
         return;
@@ -166,3 +181,27 @@ input.addEventListener("keypress", function (e) {
 //     details.style.left = `${window.innerWidth / 2 - detailsWidth / 2}px`;
 //   }
 // });
+
+function geocodeLocation() {
+  // Create a Geocoder instance
+  const geocoder = new google.maps.Geocoder();
+
+  // Call the geocode method with location and callback
+  geocoder.geocode({ location: pos }, function (results, status) {
+    if (status === "OK") {
+      // Check if any results were returned
+      if (results[0]) {
+        // Log the formatted address
+        console.log("Geocode:", results[0].formatted_address);
+      } else {
+        console.log("No results found");
+      }
+    } else {
+      console.log(
+        "Geocode was not successful for the following reason: " + status
+      );
+    }
+  });
+}
+
+geocodeLocation(pos);
