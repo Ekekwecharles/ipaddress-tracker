@@ -27,7 +27,7 @@ The App takes in a valid Ip address as an input finds and displays it on the map
 This project was built with the following technologies:
 
 - **Core-Js**
-- **CSS**
+- **SCSS/SASS**: CSS preprocessors that extend the capabilities of standard CSS by providing additional features like variables, nested rules, mixins, functions, and more.
 - **Leaflet**: A lightweight and open-source JavaScript library for creating interactive maps.
 
 ## Getting Started
